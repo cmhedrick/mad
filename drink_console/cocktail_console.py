@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import json
 import urllib.parse
 import urllib.request
@@ -7,8 +9,8 @@ import urllib.request
 NOTICE = '\033[94m'
 # red is important
 ALERT = '\033[91m'
-# green is Good
-SUCCESS = '\033[92m'
+# green is console color default
+CON = '\033[92m'
 # you need the end encoding after the message
 END = '\033[0m'
 
@@ -35,10 +37,10 @@ cell_bot = '''
 '''
 
 # modest lil banner
-print('\n-------------------')
+print(CON + '\n-------------------')
 print('    Welcome To')
 print('  Cocktail Console')
-print('-------------------')
+print('-------------------' + END)
 
 def clean_json_response(dirty_json):
     '''
@@ -86,15 +88,15 @@ def get_drink(drink_id=None):
             drink = json.loads(clean_json)
             ingredients = build_ingredient_list(drink['drinks'][0])
             title = drink['drinks'][0]['strDrink'].strip()
-            print(title_top)
-            print(title.center(50, ' '))
-            print(frame_bot)
+            print(CON + title_top + END)
+            print(CON + title.center(50, ' ') + END)
+            print(CON + frame_bot + END)
             for ing in ingredients:
-                print(ingredient_top)
-                print(ing.center(50, ' '))
-                print(measure_top)
-                print(ingredients[ing].center(50, ' '))
-                print(frame_bot)
+                print(CON + ingredient_top + END)
+                print(CON + ing.center(50, ' ') + END)
+                print(CON + measure_top + END)
+                print(CON + ingredients[ing].center(50, ' ') + END)
+                print(CON + frame_bot + END)
 
     except urllib.error.HTTPError as e:
         print(
@@ -115,10 +117,10 @@ def get_drink(drink_id=None):
 # menu
 while cmd != 'q'.lower():
     # display menu and get cmd
-    print('\nenter a command:')
-    print('get | get drink by id (default random)')
-    print('q | kill session')
-    cmd = input('==> ')
+    print(CON + '\nenter a command:' + END)
+    print(CON + 'get | get drink by id (default random)' + END)
+    print(CON + 'q | kill session' + END)
+    cmd = input(CON + '==> ')
     if cmd == 'get'.lower():
         get_drink(input('ID of drink==> '))
 
