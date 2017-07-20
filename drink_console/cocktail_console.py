@@ -79,24 +79,27 @@ def get_drink(drink_id=None):
     '''
     try:
         if drink_id:
-            pass
+            clean_json = clean_json_response(
+                urllib.request.urlopen(base_url + '/lookup.php?i=' + drink_id)
+            )
         else:
             clean_json = clean_json_response(
                 urllib.request.urlopen(base_url + '/random.php')
             )
-            #import pdb; pdb.set_trace()
-            drink = json.loads(clean_json)
-            ingredients = build_ingredient_list(drink['drinks'][0])
-            title = drink['drinks'][0]['strDrink'].strip()
-            print(CON + title_top + END)
-            print(CON + title.center(50, ' ') + END)
+        drink = json.loads(clean_json)
+        ingredients = build_ingredient_list(drink['drinks'][0])
+        title = drink['drinks'][0]['strDrink'].strip()
+        drink_id = 'ID: ' + drink['drinks'][0]['idDrink']
+        print(CON + title_top + END)
+        print(CON + title.center(50, ' ') + END)
+        print(CON + drink_id.center(50, ' ') + END)
+        print(CON + frame_bot + END)
+        for ing in ingredients:
+            print(CON + ingredient_top + END)
+            print(CON + ing.center(50, ' ') + END)
+            print(CON + measure_top + END)
+            print(CON + ingredients[ing].center(50, ' ') + END)
             print(CON + frame_bot + END)
-            for ing in ingredients:
-                print(CON + ingredient_top + END)
-                print(CON + ing.center(50, ' ') + END)
-                print(CON + measure_top + END)
-                print(CON + ingredients[ing].center(50, ' ') + END)
-                print(CON + frame_bot + END)
 
     except urllib.error.HTTPError as e:
         print(
