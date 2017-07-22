@@ -62,9 +62,10 @@ def build_ingredient_list(cocktail_json):
     '''
     ingredients = {}
     for key in cocktail_json.keys():
-        if (cocktail_json[key].strip() == ''):
-            continue
-        elif not key.startswith('strIngredient'):
+        if (
+            not key.startswith('strIngredient') or
+            (cocktail_json[key].strip() == '')
+        ):
             continue
         elif key.startswith('strIngredient'):
             ingredients[cocktail_json[key]] = cocktail_json[
